@@ -10,7 +10,7 @@ const Homepage = () => {
       id: 1,
       title: 'The Future of AI: What to Expect in 2023',
       summary: 'Discover the latest trends and predictions in the field of artificial intelligence.',
-      imageUrl: 'https://www.shutterstock.com/image-photo/example-word-written-on-wooden-260nw-1765482248.jpg',
+      imageUrl: 'https://th.bing.com/th/id/OIG.t.zWzQ3yMjTUDpRc1oJR?pid=ImgGn',
     },
     {
       id: 2,
@@ -48,10 +48,11 @@ const Homepage = () => {
           <Row className="mb-5">
             <Col>
               <Card className="bg-dark text-white">
-                <Card.Img
-                  src={filteredArticles[0].imageUrl}
-                  alt="Latest Article Image"
-                  style={{ opacity: '0.65' }}
+              <Card.Img
+                className="latest-article-image"
+                src={filteredArticles[0].imageUrl}
+                alt="Latest Article Image"
+                style={{ opacity: '0.65' }}
                 />
                 <Card.ImgOverlay className="d-flex flex-column justify-content-center">
                   <Card.Title className="latest-article-title">{filteredArticles[0].title}</Card.Title>

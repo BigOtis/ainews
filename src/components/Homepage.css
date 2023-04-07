@@ -31,4 +31,18 @@
       font-size: 1.2rem;
     }
   }
+
+  .card-img-top,
+  .latest-article-image {
+    max-width: 100%;
+    object-fit: cover;
+  }
+  
+  .card-img-top {
+    max-height: 250px;
+  }
+  
+  .latest-article-image {
+    max-height: 400px;
+  }
   
