@@ -1,0 +1,34 @@
+.latest-article-title {
+    font-size: 2rem;
+  }
+  
+  .latest-article-summary {
+    display: none;
+  }
+  
+  .article-title {
+    font-size: 1.2rem;
+  }
+  
+  .article-summary {
+    font-size: 1rem;
+  }
+  
+  @media (min-width: 576px) {
+    .latest-article-title {
+      font-size: 2.5rem;
+    }
+  
+    .latest-article-summary {
+      display: block;
+    }
+  
+    .article-title {
+      font-size: 1.5rem;
+    }
+  
+    .article-summary {
+      font-size: 1.2rem;
+    }
+  }
+  

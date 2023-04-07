@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap");
+
+/* Custom Bootstrap Theme for a modern news website */
+
+/* Main theme colors */
+:root {
+  --primary-color: #132a49;
+  --secondary-color: #3b82f6;
+  --dark-color: #1c1c1c;
+  --light-color: #f8f9fa;
+}
+
+/* Background */
+body {
+  background-color: var(--light-color);
+  font-family: "Comfortaa", cursive;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--dark-color);
+}
+
+/* Cards */
+.card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.card-img-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+/* Buttons */
+.btn {
+  font-weight: bold;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
