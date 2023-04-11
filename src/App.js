@@ -8,6 +8,7 @@ import Layout from "./layout/Layout";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
+import NewsArticle from "./pages/NewsArticle";
 import './index.css';
 
 
@@ -18,6 +19,7 @@ const App = () => {
         <Routes>
         <Route path="/" element={<Home />} exact />
           <Route path="/about" element={<About />} />
+          <Route path="/article/:id" element={<NewsArticle />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </Container>
