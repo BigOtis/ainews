@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const resume = require('./controllers/ResumeAPI');
-const { insertArticle, fetchArticles, fetchArticleById } = require('./controllers/articleController');
+const { insertArticle, fetchArticles, fetchArticleById, fetchLatestArticles } = require('./controllers/articleController');
 
 router.get('/', (req, res) => {
   res.send('Hello, Leroy!');
 });
-
-router.post('/optimize-resume', resume.resumeOptimizerHandler);
 
 router.post('/articles', async (req, res) => {
   const article = req.body;
@@ -39,6 +36,15 @@ router.get('/articles/:id', async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch article' });
+  }
+});
+
+router.get('/latest-articles', async (req, res) => {
+  try {
+    const latestArticles = await fetchLatestArticles(req.app.locals.db);
+    res.json(latestArticles);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch latest articles' });
   }
 });
 

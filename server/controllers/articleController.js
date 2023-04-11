@@ -29,9 +29,19 @@ const fetchArticleById = async (db, id) => {
   return article;
 };
 
+const fetchLatestArticles = async (db) => {
+  const articles = await db.collection("articles")
+    .find({}, { projection: { title: 1, summary: 1, imageURL: 1 } })
+    .sort({ createdAt: -1 })
+    .limit(10)
+    .toArray();
+  return articles;
+};
+
 module.exports = {
   connectToDatabase,
   insertArticle,
   fetchArticles,
   fetchArticleById,
+  fetchLatestArticles
 };
