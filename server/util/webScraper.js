@@ -33,7 +33,7 @@ const getArticleTextWithPuppeteer = async (url) => {
   }
 };
 
-const getGoogleNewsArticles = async (searchTerm, timeframe) => {
+const getGoogleNewsArticles = async (searchTerm, timeframe, maxArticles=10) => {
   try {
     const articles = await scrapeGoogleNews({
       searchTerm: searchTerm,
@@ -45,6 +45,7 @@ const getGoogleNewsArticles = async (searchTerm, timeframe) => {
       },
       timeframe: timeframe,
       puppeteerArgs: [],
+      maxArticles: maxArticles,
     });
 
     return articles;
@@ -63,11 +64,10 @@ const main = async () => {
     console.log(`Title: ${article.title}`);
     console.log(`Link: ${article.link}`);
 
-    const articleText = await getArticleTextWithPuppeteer(article.url);
+    const articleText = await getArticleTextWithPuppeteer(article.link);
     console.log('Content:');
     console.log(articleText);
     console.log('----------------------------------------------');
-    return;
   }
 };
 

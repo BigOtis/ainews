@@ -47,7 +47,14 @@ module.exports = async function scrapeGoogleNews(config) {
   const results = [];
   const urlChecklist = [];
 
+  let count = 0; // Keep track of the number of articles
+  const maxArticles = config.maxArticles || 10; // Set the maximum number of articles based on config input or default to 10
+
   articles.each(function () {
+    // Stop processing articles if the maxArticles threshold has been met
+    if (count >= maxArticles) {
+      return false;
+    }
     const link = $(this).find('a[href^="./article"]').attr('href').replace('./', 'https://news.google.com/') || false;
     link && urlChecklist.push(link);
     const mainArticle = {
@@ -73,6 +80,7 @@ module.exports = async function scrapeGoogleNews(config) {
         }
       });
       results.push(mainArticle);
+      count++;
     });
   
     if (config.prettyURLs) {
