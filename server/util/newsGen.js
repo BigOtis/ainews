@@ -83,7 +83,7 @@ const generateArticleContent = async (sourceArticles) => {
     //console.log("Inserting images...");
     //const processedContent = await insertImages(generatedArticle);
 
-    return { content: generatedArticle, title, summary };
+    return { content: generatedArticle, title, summary, chosenArticles };
   } catch (error) {
     console.error(`Error generating article content: ${error.message}`);
     return { content: '', title: '', summary: '' };
@@ -119,9 +119,15 @@ const createWeeklyAINewsArticle = async () => {
     }
 
     console.log("Creating article content...");
-    const { content, title, summary } = await generateArticleContent(workableArticles);
+    const { content, title, summary, chosenArticles } = await generateArticleContent(workableArticles);
 
     console.log("Add articles to database...");
+
+    const sourceArticlesData = chosenArticles.map(article => ({
+      title: article.title,
+      link: article.link
+    }));
+
     const mongoClient = new MongoClient(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
     await mongoClient.connect();
 
@@ -133,6 +139,7 @@ const createWeeklyAINewsArticle = async () => {
       summary,
       content,
       imageURL: 'https://th.bing.com/th/id/OIG.Ckmtump2xlt7mrw7e0x8?pid=ImgGn',
+      sourceArticles: sourceArticlesData,
       createdAt: new Date(),
     };
 
