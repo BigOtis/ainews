@@ -37,23 +37,3 @@
     margin-top: 0.5rem;
   }
   
-.header-image {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  max-width: 80px;
-  height: auto;
-  border-radius: 5px;
-}
-
-.article-header {
-  background-color: #f8f9fa;
-  padding: 1.5rem;
-  position: relative;
-}
-
-.header-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}

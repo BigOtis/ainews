@@ -17,6 +17,7 @@
     "jsdom": "^21.1.1",
     "mdb-react-ui-kit": "^5.1.0",
     "mongodb": "^5.1.0",
+    "node-cache": "^5.1.2",
     "node-fetch": "^2.6.6",
     "nodemon": "^2.0.21",
     "openai": "^3.2.1",

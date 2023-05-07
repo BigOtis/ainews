@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 import { fetchArticleById } from '../api/articles-api';
 import { Parser } from 'html-to-react';
 import { format } from 'date-fns';
@@ -59,11 +59,28 @@ const NewsArticle = () => {
         <Col>
           <Card className="article-container">
             <Card.Header className="article-header">
-              <div className="header-content">
-                <h2>{article.title}</h2>
-                <h5>{formattedDate}</h5>
-              </div>
-              {article.imageURL && <img src={article.imageURL} alt="Article" className="header-image" />}
+              <Container>
+                <Row>
+                  <Col xs={12} md={8}>
+                    <div className="header-content">
+                      <h2>{article.title}</h2>
+                      <h5>{formattedDate}</h5>
+                    </div>
+                  </Col>
+                  <Col xs={12} md={4} className="d-flex justify-content-center align-items-center">
+                    {article.imageURL && (
+                      <Image
+                        src={article.imageURL}
+                        alt="Article"
+                        className="header-image"
+                        style={{ width: '130px', height: '130px' }}
+                        fluid
+                        rounded
+                      />
+                    )}
+                  </Col>
+                </Row>
+              </Container>
             </Card.Header>
             <Card.Body className="article-content" dangerouslySetInnerHTML={{ __html: processedContent }} />
             <Card.Footer>
@@ -80,7 +97,7 @@ const NewsArticle = () => {
         </Col>
       </Row>
     </Container>
-  );
+  );  
 };
 
 export default NewsArticle;
