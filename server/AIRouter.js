@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { insertArticle, fetchArticles, fetchArticleById, fetchLatestArticles } = require('./controllers/articleController');
+const { insertArticle, fetchArticles, fetchArticleByTitleId, fetchLatestArticles } = require('./controllers/articleController');
 
 router.get('/', (req, res) => {
   res.send('Hello, Leroy!');
@@ -28,7 +28,7 @@ router.get('/articles', async (req, res) => {
 router.get('/articles/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const article = await fetchArticleById(req.app.locals.db, id);
+    const article = await fetchArticleByTitleId(req.app.locals.db, id);
     if (!article) {
       res.status(404).json({ error: 'Article not found' });
     } else {

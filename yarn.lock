@@ -1031,7 +1031,7 @@
   "resolved" "https://registry.npmjs.org/@babel/regjsgen/-/regjsgen-0.8.0.tgz"
   "version" "0.8.0"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
   "integrity" "sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw=="
   "resolved" "https://registry.npmjs.org/@babel/runtime/-/runtime-7.21.0.tgz"
   "version" "7.21.0"
@@ -3827,6 +3827,13 @@
     "whatwg-mimetype" "^3.0.0"
     "whatwg-url" "^12.0.0"
 
+"date-fns@^2.30.0":
+  "integrity" "sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw=="
+  "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.30.0.tgz"
+  "version" "2.30.0"
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+
 "debug@^2.6.0":
   "integrity" "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz"
@@ -4100,7 +4107,7 @@
   dependencies:
     "domelementtype" "^2.2.0"
 
-"domhandler@^5.0.1", "domhandler@^5.0.2", "domhandler@^5.0.3":
+"domhandler@^5.0", "domhandler@^5.0.1", "domhandler@^5.0.2", "domhandler@^5.0.3":
   "integrity" "sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w=="
   "resolved" "https://registry.npmjs.org/domhandler/-/domhandler-5.0.3.tgz"
   "version" "5.0.3"
@@ -5335,6 +5342,16 @@
     "relateurl" "^0.2.7"
     "terser" "^5.10.0"
 
+"html-to-react@^1.5.1":
+  "integrity" "sha512-dFLZRBjpMk89Ukwa6Fq7oApinn3TEZD0gGFUkmI9DqNQxTjN7gF9owhyu+t8h+bpEZrX2DMxZLYjEfw0C/iL7A=="
+  "resolved" "https://registry.npmjs.org/html-to-react/-/html-to-react-1.5.1.tgz"
+  "version" "1.5.1"
+  dependencies:
+    "domhandler" "^5.0"
+    "htmlparser2" "^8.0"
+    "lodash.camelcase" "^4.3.0"
+    "react" "^18.0"
+
 "html-webpack-plugin@^5.5.0":
   "integrity" "sha512-sy88PC2cRTVxvETRgUHFrL4No3UxvcH8G1NepGhqaTT+GXN2kTamqasot0inS5hXeg1cMbFDt27zzo9p35lZVw=="
   "resolved" "https://registry.npmjs.org/html-webpack-plugin/-/html-webpack-plugin-5.5.0.tgz"
@@ -5365,6 +5382,16 @@
     "domhandler" "^5.0.2"
     "domutils" "^3.0.1"
     "entities" "^4.3.0"
+
+"htmlparser2@^8.0":
+  "integrity" "sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA=="
+  "resolved" "https://registry.npmjs.org/htmlparser2/-/htmlparser2-8.0.2.tgz"
+  "version" "8.0.2"
+  dependencies:
+    "domelementtype" "^2.3.0"
+    "domhandler" "^5.0.3"
+    "domutils" "^3.0.1"
+    "entities" "^4.4.0"
 
 "http-deceiver@^1.2.7":
   "integrity" "sha512-LmpOGxTfbpgtGVxJrj5k7asXHCgNZp5nLfp+hWc8QQRqtb7fUy6kRY3BO1h9ddF6yIPYUARgxGOwB42DnxIaNw=="
@@ -6650,6 +6677,11 @@
   "version" "6.0.0"
   dependencies:
     "p-locate" "^5.0.0"
+
+"lodash.camelcase@^4.3.0":
+  "integrity" "sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA=="
+  "resolved" "https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz"
+  "version" "4.3.0"
 
 "lodash.debounce@^4.0.8":
   "integrity" "sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow=="
@@ -8502,7 +8534,7 @@
     "@babel/runtime" "^7.0.0"
     "memoize-one" ">=3.1.1 <6"
 
-"react@*", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0-rc", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0  || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.8.0 || 17.x || 18.x", "react@^18.1.0", "react@^18.2.0", "react@>= 16", "react@>=0.14.0", "react@>=15.0.0", "react@>=16.14.0", "react@>=16.3.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@>=16.8.6", "react@>=17", "react@>0.13.0":
+"react@*", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0-rc", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0  || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.8.0 || 17.x || 18.x", "react@^18.0", "react@^18.1.0", "react@^18.2.0", "react@>= 16", "react@>=0.14.0", "react@>=15.0.0", "react@>=16.14.0", "react@>=16.3.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@>=16.8.6", "react@>=17", "react@>0.13.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

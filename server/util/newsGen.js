@@ -1,9 +1,27 @@
+const fs = require('fs');
+const path = require('path');
 const scrapeGoogleNews = require('./scrapeGoogleNews');
 const { insertArticle } = require('../controllers/articleController');
 const { MongoClient } = require('mongodb');
-const { Configuration, OpenAIApi } = require("openai");
+const { chooseInterestingArticles, writeArticle, generateTitleAndSummary, summarizeArticles } = require('./openaiUtils');
+const { getArticleTextWithPuppeteer } = require('./webScraper');
+const { searchGoogleImages } = require('./googleImageScraper');
 
-const model = "gpt-3.5-turbo"; // Use gpt-4 for production
+const CACHE_FILE_PATH = path.join(__dirname, 'workableArticlesCache.json');
+
+// Helper function to read cache
+const readCache = () => {
+  try {
+    return JSON.parse(fs.readFileSync(CACHE_FILE_PATH, 'utf-8'));
+  } catch (error) {
+    return {};
+  }
+};
+
+// Helper function to write cache
+const writeCache = (data) => {
+  fs.writeFileSync(CACHE_FILE_PATH, JSON.stringify(data), 'utf-8');
+};
 
 const getGoogleNewsArticles = async (searchTerm, timeframe, maxArticles=10) => {
   try {
@@ -27,71 +45,43 @@ const getGoogleNewsArticles = async (searchTerm, timeframe, maxArticles=10) => {
   }
 };
 
+const insertImages = async (content) => {
+  const regex = /\{Image=(.*?)\}/g;
+
+  let match;
+  let processedContent = content;
+
+  while ((match = regex.exec(content)) !== null) {
+    const searchTerm = match[1];
+    console.log(`Searching for image: ${searchTerm}`);
+    const imageUrl = await searchGoogleImages(searchTerm);
+    const imageTag = imageUrl ? `<img src="${imageUrl}" alt="${searchTerm}"/>` : '';
+
+    processedContent = processedContent.replace(match[0], imageTag);
+  }
+
+  return processedContent;
+};
+
 
 const generateArticleContent = async (sourceArticles) => {
-  console.log('Generating article content...')
-  const configuration = new Configuration({
-    apiKey: process.env.API_KEY_VALUE,
-  });
-
-  const openai = new OpenAIApi(configuration);
+  console.log('Generating article content...');
 
   try {
-    // Limit the source articles to a maximum of 10 and map them to their titles
     const titles = sourceArticles.slice(0, 10).map(article => article.title);
     console.log("Reviewing articles: " + JSON.stringify(titles));
 
-    const chooseArticlesResponse = await openai.createChatCompletion({
-      model: model,
-      messages: [
-        {
-          role: "system",
-          content: "You are a helpful assistant specialized in choosing the three most interesting articles from a list of article titles.",
-        },
-        {
-          role: "user",
-          content: `Here is a list of article titles: ${JSON.stringify(titles)}. Please provide the indexes of the three most interesting articles in JSON format.`,
-        },
-      ],
-    });
+    const chosenIndexes = await chooseInterestingArticles(titles);
+    const chosenArticles = chosenIndexes.interesting_articles.map(index => sourceArticles[index]);
 
-    const chosenIndexes = JSON.parse(chooseArticlesResponse.data.choices[0].message.content);
-    const chosenArticles = chosenIndexes.map(index => sourceArticles[index]);
+    const summarizedArticles = await summarizeArticles(chosenArticles);
+    const generatedArticle = await writeArticle(summarizedArticles);
 
-    const contentResponse = await openai.createChatCompletion({
-      model: model,
-      messages: [
-        {
-          role: "system",
-          content: "You are a helpful assistant specialized in writing weekly AI news articles based on provided sources.",
-        },
-        {
-          role: "user",
-          content: `Write an article about the status of AI this week based on the following articles: ${JSON.stringify(chosenArticles)}`,
-        },
-      ],
-    });
-
-    const generatedArticle = contentResponse.data.choices[0].message.content;
-
-    const titleAndSummaryResponse = await openai.createChatCompletion({
-      model: model,
-      messages: [
-        {
-          role: "system",
-          content: "You are a helpful assistant specialized in creating unique titles and short summaries for AI news articles.",
-        },
-        {
-          role: "user",
-          content: "Generate a unique title and a short summary for the following AI news article content: " + generatedArticle,
-        },
-      ],
-    });
-
-    const titleAndSummary = titleAndSummaryResponse.data.choices[0].message.content.split('\n');
-    const title = titleAndSummary[0];
-    const summary = titleAndSummary[1];
+    const { title, summary } = await generateTitleAndSummary(generatedArticle);
     console.log(`Created Title: ${title}`);
+
+    //console.log("Inserting images...");
+    //const processedContent = await insertImages(generatedArticle);
 
     return { content: generatedArticle, title, summary };
   } catch (error) {
@@ -102,18 +92,30 @@ const generateArticleContent = async (sourceArticles) => {
 
 const createWeeklyAINewsArticle = async () => {
   try {
-    const articles = await getGoogleNewsArticles("AI News", "7d");
+    const currentDate = new Date().toISOString().slice(0, 10);
+    let workableArticles = [];
+    
+    const cache = readCache();
+    
+    if (cache[currentDate]) {
+      workableArticles = cache[currentDate];
+    } else {
+      const articles = await getGoogleNewsArticles("AI News", "7d");
 
-    const workableArticles = [];
-    for (const article of articles) {
-      const text = article.content;
-      if (text) {
-        console.log(`Workable Article text: ${text}`);
-        workableArticles.push({ ...article, text });
-        if (workableArticles.length === 6) {
-          break;
+      for (const article of articles) {
+        const text = await getArticleTextWithPuppeteer(article.link);
+        if (text) {
+          console.log(`Workable Article text: ${text}`);
+          workableArticles.push({ ...article, text });
+          if (workableArticles.length === 6) {
+            break;
+          }
         }
       }
+      
+      // Update cache
+      cache[currentDate] = workableArticles;
+      writeCache(cache);
     }
 
     console.log("Creating article content...");
@@ -123,11 +125,14 @@ const createWeeklyAINewsArticle = async () => {
     const mongoClient = new MongoClient(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
     await mongoClient.connect();
 
+    const titleId = title.toLowerCase().replace(/ /g, '-');
+
     const article = {
       title,
+      titleId,
       summary,
       content,
-      imageURL: 'https://example.com/default_image.jpg',
+      imageURL: 'https://th.bing.com/th/id/OIG.Ckmtump2xlt7mrw7e0x8?pid=ImgGn',
       createdAt: new Date(),
     };
 
@@ -137,6 +142,7 @@ const createWeeklyAINewsArticle = async () => {
     console.error(`Error creating weekly AI news article: ${error.message}`);
   }
 };
+  
   
   createWeeklyAINewsArticle();
   

@@ -55,20 +55,22 @@ const getGoogleNewsArticles = async (searchTerm, timeframe, maxArticles=10) => {
   }
 };
 
-const main = async () => {
-  const searchTerm = 'ai news';
-  const timeframe = '7d';
-  const articles = await getGoogleNewsArticles(searchTerm, timeframe);
+exports.getArticleTextWithPuppeteer = getArticleTextWithPuppeteer;
 
-  for (const article of articles) {
-    console.log(`Title: ${article.title}`);
-    console.log(`Link: ${article.link}`);
+// const main = async () => {
+//   const searchTerm = 'ai news';
+//   const timeframe = '7d';
+//   const articles = await getGoogleNewsArticles(searchTerm, timeframe);
 
-    const articleText = await getArticleTextWithPuppeteer(article.link);
-    console.log('Content:');
-    console.log(articleText);
-    console.log('----------------------------------------------');
-  }
-};
+//   for (const article of articles) {
+//     console.log(`Title: ${article.title}`);
+//     console.log(`Link: ${article.link}`);
 
-main();
+//     const articleText = await getArticleTextWithPuppeteer(article.link);
+//     console.log('Content:');
+//     console.log(articleText);
+//     console.log('----------------------------------------------');
+//   }
+// };
+
+// main();
