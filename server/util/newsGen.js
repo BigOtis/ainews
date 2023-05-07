@@ -90,7 +90,7 @@ const generateArticleContent = async (sourceArticles) => {
   }
 };
 
-const createWeeklyAINewsArticle = async () => {
+const createWeeklyNewsArticle = async (topic = "AI News") => {
   try {
     const currentDate = new Date().toISOString().slice(0, 10);
     let workableArticles = [];
@@ -100,7 +100,7 @@ const createWeeklyAINewsArticle = async () => {
     if (cache[currentDate]) {
       workableArticles = cache[currentDate];
     } else {
-      const articles = await getGoogleNewsArticles("AI News", "7d");
+      const articles = await getGoogleNewsArticles(topic, "7d");
 
       for (const article of articles) {
         const text = await getArticleTextWithPuppeteer(article.link);
@@ -146,10 +146,8 @@ const createWeeklyAINewsArticle = async () => {
     await insertArticle(mongoClient.db("ainews"), article);
     await mongoClient.close();
   } catch (error) {
-    console.error(`Error creating weekly AI news article: ${error.message}`);
+    console.error(`Error creating weekly news article: ${error.message}`);
   }
 };
-  
-  
-  createWeeklyAINewsArticle();
-  
+
+createWeeklyNewsArticle("Space News"); 

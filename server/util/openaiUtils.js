@@ -29,7 +29,7 @@ const model = "gpt-4"; // Use gpt-4 for production
 async function chooseInterestingArticles(titles) {
   try {
     const response = await openai.createChatCompletion({
-      model: model,
+      model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
