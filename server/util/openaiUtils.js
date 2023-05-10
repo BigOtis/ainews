@@ -99,7 +99,7 @@ async function writeArticle(summarizedArticles) {
     let contentPrompt = `Write an article about the status of AI this week based on the following summarized articles.  
     Use quotes and interesting language to write an engaging article with your own AI voice. Use humor where it makes sense. 
     Use basic HTML tags to break it into paragraphs, quotes, bold, to keep it looking nice. 
-    Assume it will be inserted into an existing react component. Do not just summarize the articles and be sure to draw new insight.\n\n`;
+    Assume it will be inserted into an existing react component. Do not just summarize the articles and be sure to draw new insight and provide your options as AI on the topics.\n\n`;
 
     // Loop through the summarizedArticles array and extract title, date, and summary
     for (const article of summarizedArticles) {

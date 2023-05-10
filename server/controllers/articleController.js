@@ -44,7 +44,7 @@ const fetchLatestArticles = async (db) => {
 
   if (!articles) {
     articles = await db.collection("articles")
-      .find({}, { projection: { title: 1, summary: 1, imageURL: 1 } })
+      .find({}, { projection: { title: 1, summary: 1, imageURL: 1, titleId: 1 } })
       .sort({ createdAt: -1 })
       .limit(10)
       .toArray();

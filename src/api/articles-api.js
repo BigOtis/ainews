@@ -1,6 +1,6 @@
 export const fetchAllArticles = async () => {
     try {
-      const response = await fetch('/api/articles');
+      const response = await fetch('/api/latest-articles');
       if (!response.ok) {
         throw new Error('Failed to fetch articles');
       }

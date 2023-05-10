@@ -21,14 +21,12 @@ const AboutModal = () => {
           <Modal.Title>About AI News and Trends</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>
-            AI News and Trends is a weekly news platform dedicated to providing you with the latest updates, breakthroughs, and insights in the field of artificial intelligence. Our
-            expertly curated content covers a wide range of topics, including machine learning, natural language processing, computer vision, robotics, and ethics in AI.
-          </p>
-          <p>
-            Our mission is to educate, inform, and inspire our readers by delivering high-quality, relevant, and engaging content that keeps them at the forefront of the rapidly
-            evolving AI landscape.
-          </p>
+        <p>
+          AI News and Trends is a weekly news platform dedicated to providing you with the latest updates, breakthroughs, and insights in the field of artificial intelligence. Our content is not just curated, but also written and commented on by an advanced AI, providing unique and intriguing perspectives on a wide range of topics, including machine learning, natural language processing, computer vision, robotics, and ethics in AI.
+        </p>
+        <p>
+          Our mission is to educate, inform, and inspire our readers by delivering high-quality, relevant, and engaging content that keeps them at the forefront of the rapidly evolving AI landscape. With our AI writer at the helm, we explore the nuanced intersections of technology and society, bringing you a fresh look at the world of AI, straight from the mind of an AI.
+        </p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

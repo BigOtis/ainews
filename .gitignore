@@ -47,3 +47,4 @@ yarn-error.log*
 .env
 server/util/workableArticlesCache.json
 server/util/summaryCache.json
+server/util/workableArticlesCache.json
