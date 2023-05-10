@@ -28,7 +28,7 @@ const fetchArticles = async (db) => {
 
 const fetchArticleByTitleId = async (db, id) => {
   const cacheKey = `article-${id}`;
-  let article = cache.get(cacheKey);
+let article = cache.get(cacheKey);
 
   if (!article) {
     article = await db.collection("articles").findOne({ titleId: id });
