@@ -150,4 +150,4 @@ const createWeeklyNewsArticle = async (topic = "AI News") => {
   }
 };
 
-createWeeklyNewsArticle("Tucker Carlson"); 
+createWeeklyNewsArticle("AI News"); 

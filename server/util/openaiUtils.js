@@ -37,7 +37,7 @@ async function chooseInterestingArticles(titles) {
         },
         {
           role: "user",
-          content: `Here is a list of article titles: ${JSON.stringify(titles)}. Please provide the indexes of the three most interesting articles in JSON format in an array named "interesting_articles".`,
+          content: `Here is a list of article titles: ${JSON.stringify(titles)}. Please provide the indexes of the three most interesting articles in JSON format in an array named "interesting_articles". Just provide the JSON and no other text.`,
         },
       ],
     });
