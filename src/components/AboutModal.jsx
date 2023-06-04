@@ -30,6 +30,9 @@ const AboutModal = () => {
         <p>
           For more AI tools like Chat/Essay writing, please visit our main site: <a href="http://www.otisfuse.com" target="_blank" rel="noopener noreferrer">www.otisfuse.com</a>
         </p>
+        <p>
+          For advertising and business inquires, please contact otis1017@gmail.com
+        </p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
