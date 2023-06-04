@@ -131,7 +131,7 @@ const createWeeklyNewsArticle = async (topic = "AI News") => {
     const mongoClient = new MongoClient(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
     await mongoClient.connect();
 
-    const titleId = title.toLowerCase().replace(/ /g, '-');
+    const titleId = encodeURIComponent(title.toLowerCase().replace(/[^a-z0-9]/g, '_'));
 
     const article = {
       title,

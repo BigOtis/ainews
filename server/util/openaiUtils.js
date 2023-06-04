@@ -33,11 +33,11 @@ async function chooseInterestingArticles(titles) {
       messages: [
         {
           role: "system",
-          content: "You are a specialized assistant specialized in choosing the three most interesting articles from a list of article titles. All output should be returned in JSON format. Do not provide any other information.",
+          content: "You are a specialized assistant specialized in choosing the four most interesting articles from a list of article titles. All output should be returned in JSON format. Don't pick articles that are too similar to each other. Do not provide any other information.",
         },
         {
           role: "user",
-          content: `Here is a list of article titles: ${JSON.stringify(titles)}. Please provide the indexes of the three most interesting articles in JSON format in an array named "interesting_articles". Just provide the JSON and no other text.`,
+          content: `Here is a list of article titles: ${JSON.stringify(titles)}. Please provide the indexes of the four most interesting articles in JSON format in an array named "interesting_articles". Just provide the JSON and no other text.`,
         },
       ],
     });
@@ -61,7 +61,7 @@ const getSummary = async (title, text) => {
       },
       {
         role: "user",
-        content: `Please shorten the following article:\nTitle: ${title}\nText: ${text}`,
+        content: `Please shorten the following article. Do not make it too short, include at least 300 words:\nTitle: ${title}\nText: ${text}`,
       },
     ],
   });
