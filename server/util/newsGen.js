@@ -150,4 +150,4 @@ const createWeeklyNewsArticle = async (topic = "AI News") => {
   }
 };
 
-createWeeklyNewsArticle("AI News"); 
+createWeeklyNewsArticle("ChatGPT News"); 

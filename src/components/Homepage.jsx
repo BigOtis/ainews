@@ -48,25 +48,30 @@ const Homepage = () => {
             </Col>
           </Row>
         )}
-        <Row>
-          {filteredArticles.slice(1).map((article, index) => (
-            <Col xs={12} sm={6} md={4} key={article.id} className="mb-4">
-              <Card>
-                <Card.Img variant="top" src={article.imageURL} />
-                <Card.Body>
-                  <Card.Title className="article-title">{article.title}</Card.Title>
-                  <Button variant="primary" href={`/article/${article.titleId}`}>
-                    Read More
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+       <Row>
+          {filteredArticles.slice(1).map((article, index) => {
+            const createdAt = new Date(article.createdAt).toLocaleString(); // Convert and format the date and time
+
+            return (
+              <Col xs={12} sm={6} md={4} key={article.id} className="mb-4">
+                <Card>
+                  <Card.Img variant="top" src={article.imageURL} />
+                  <Card.Body>
+                    <Card.Title className="article-title">{article.title}</Card.Title>
+                    <Card.Text>{createdAt}</Card.Text> {/* Display the date and time */}
+                    <Button variant="primary" href={`/article/${article.titleId}`}>
+                      Read More
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
         </Row>
       </Container>
     </>
   );
   
-};  
+};
 
 export default Homepage;
