@@ -28,12 +28,18 @@ const fetchArticles = async (db) => {
 
 const fetchArticleByTitleId = async (db, id) => {
   const cacheKey = `article-${id}`;
-let article = cache.get(cacheKey);
+  let article = cache.get(cacheKey);
 
   if (!article) {
     article = await db.collection("articles").findOne({ titleId: id });
     cache.set(cacheKey, article);
   }
+
+  // Asynchronously increment timesFetched without awaiting the result
+  db.collection("articles").updateOne(
+    { titleId: id },
+    { $inc: { timesFetched: 1 } }
+  ).catch(err => console.error('Failed to increment timesFetched:', err));
 
   return article;
 };
