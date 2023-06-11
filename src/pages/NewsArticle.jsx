@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 import { fetchArticleById } from '../api/articles-api';
 import { Parser } from 'html-to-react';
 import { format } from 'date-fns';
+import { Helmet } from 'react-helmet';
 import './Article.css';
 
 const NewsArticle = () => {
@@ -55,6 +56,18 @@ const NewsArticle = () => {
 
   return (
     <Container fluid className="mt-4">
+      <Helmet>
+        <title>{article.title}</title>
+        <meta name="description" content={article.summary} />
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={article.summary} />
+        <meta property="og:image" content={article.imageURL} />
+        <meta property="og:url" content={window.location.href} />
+        <meta name="twitter:title" content={article.title} />
+        <meta name="twitter:description" content={article.summary} />
+        <meta name="twitter:image" content={article.imageURL} />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       <Row>
         <Col>
           <Card className="article-container">
@@ -84,7 +97,7 @@ const NewsArticle = () => {
             </Card.Header>
             <Card.Body className="article-content" dangerouslySetInnerHTML={{ __html: processedContent }} />
             <Card.Footer>
-              <h5>Summary</h5>
+            <h5>Summary</h5>
               <p>{article.summary}</p>
               {renderSourceArticles()}
             </Card.Footer>
@@ -101,3 +114,4 @@ const NewsArticle = () => {
 };
 
 export default NewsArticle;
+
