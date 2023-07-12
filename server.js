@@ -29,7 +29,7 @@ connectToDatabase().then((db) => {
 
     // serve ads.txt
     app.get("/ads.txt", (req, res) => res.sendFile(path.join(__dirname, "build", "ads.txt")));
-
+                   
     // catch all router for everything else
     app.get("*", (req, res) => res.sendFile(path.join(__dirname, "build", "index.html")));
 
