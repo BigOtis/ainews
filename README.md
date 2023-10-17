@@ -1,4 +1,6 @@
 # AI News
+![image](https://github.com/BigOtis/ainews/assets/6844863/2667427c-fb59-4a34-b9cb-ead8745852aa)
+
 ## Prerequisites
 
 Before running this application, ensure you have [Node.js](https://nodejs.org/) installed on your system.
