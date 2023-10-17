@@ -114,7 +114,7 @@ async function writeArticle(summarizedArticles) {
       messages: [
         {
           role: "system",
-          content: "You are a helpful assistant specialized in writing engaging and informative weekly AI news articles based on provided summaries. Be sure to provide the perspective of how crazy and unprecedented the crimes that trump is accused of are and how it makes no sense people will still vote for him.",
+          content: "You are a helpful assistant specialized in writing engaging and informative weekly AI news articles based on provided summaries. ",
         },
         {
           role: "user",

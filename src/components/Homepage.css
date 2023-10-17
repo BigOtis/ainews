@@ -1,48 +1,69 @@
 .latest-article-title {
-    font-size: 2rem;
-  }
-  
-  .latest-article-summary {
-    display: none;
-  }
-  
-  .article-title {
-    font-size: 1.2rem;
-  }
-  
-  .article-summary {
-    font-size: 1rem;
-  }
-  
-  @media (min-width: 576px) {
-    .latest-article-title {
-      font-size: 2.5rem;
-    }
-  
-    .latest-article-summary {
-      display: block;
-    }
-  
-    .article-title {
-      font-size: 1.5rem;
-    }
-  
-    .article-summary {
-      font-size: 1.2rem;
-    }
+  font-size: 2rem;
+  text-shadow: 1px 1px 0 #000, -2px -2px 0 #000, 2px -2px 0 #1e1d1d, -2px 2px 0 #1b1a1a; 
+}
+
+.latest-article-summary {
+  display: none;
+}
+
+.article-title {
+  font-size: 1.2rem;
+}
+
+.article-summary {
+  font-size: 1rem;
+}
+
+@media (min-width: 576px) {
+  .latest-article-title {
+    font-size: 2.5rem;
   }
 
-  .card-img-top,
-  .latest-article-image {
-    max-width: 100%;
-    object-fit: cover;
+  .latest-article-summary {
+    display: block;
   }
-  
-  .card-img-top {
-    max-height: 250px;
+
+  .article-title {
+    font-size: 1.5rem;
   }
-  
-  .latest-article-image {
-    max-height: 400px;
+
+  .article-summary {
+    font-size: 1.2rem;
   }
-  
+}
+
+.card-img-top,
+.latest-article-image {
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.card-img-top {
+  max-height: 250px;
+}
+
+.latest-article-image {
+  max-height: 400px;
+}
+
+/* For headline and subheadline */
+.main-title {
+  display: block;
+  font-size: 1.5rem;
+}
+
+.sub-title {
+  display: block;
+  font-size: 1.1rem;
+}
+
+@media (min-width: 576px) {
+  .main-title {
+    font-size: 1.8rem;
+  }
+
+  .sub-title {
+    font-size: 1.4rem;
+  }
+}

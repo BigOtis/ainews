@@ -25,6 +25,19 @@ const Homepage = () => {
     article.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const renderTitle = (title) => {
+    const splitTitle = title.split(":");
+    if (splitTitle.length === 2) {
+      return (
+        <>
+          <span className="main-title">{splitTitle[0]}</span>
+          <span className="sub-title">{splitTitle[1]}</span>
+        </>
+      );
+    }
+    return title;
+  };
+
   return (
     <>
       <Container fluid className="p-sm-3">
@@ -39,7 +52,7 @@ const Homepage = () => {
                 style={{ opacity: '0.65' }}
                 />
                 <Card.ImgOverlay className="d-flex flex-column justify-content-center">
-                  <Card.Title className="latest-article-title">{filteredArticles[0].title}</Card.Title>
+                  <Card.Title className="latest-article-title">{renderTitle(filteredArticles[0].title)}</Card.Title>
                   <Button variant="primary" href={`/article/${filteredArticles[0].titleId}`}>
                     Read More
                   </Button>
@@ -48,17 +61,16 @@ const Homepage = () => {
             </Col>
           </Row>
         )}
-       <Row>
+        <Row>
           {filteredArticles.slice(1).map((article, index) => {
-            const createdAt = new Date(article.createdAt).toLocaleString(); // Convert and format the date and time
-
+            const createdAt = new Date(article.createdAt).toLocaleString();
             return (
               <Col xs={12} sm={6} md={4} key={article.id} className="mb-4">
                 <Card>
                   <Card.Img variant="top" src={article.imageURL} />
                   <Card.Body>
-                    <Card.Title className="article-title">{article.title}</Card.Title>
-                    <Card.Text>{createdAt}</Card.Text> {/* Display the date and time */}
+                    <Card.Title className="article-title">{renderTitle(article.title)}</Card.Title>
+                    <Card.Text>{createdAt}</Card.Text>
                     <Button variant="primary" href={`/article/${article.titleId}`}>
                       Read More
                     </Button>
@@ -71,7 +83,6 @@ const Homepage = () => {
       </Container>
     </>
   );
-  
 };
 
 export default Homepage;
