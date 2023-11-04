@@ -2,6 +2,21 @@
   padding: 2rem;
 }
 
+.article-header {
+  padding-bottom: 0; /* Remove extra padding if the image is below the header */
+}
+
+.article-image-wrapper {
+  width: 100%; /* Ensure the wrapper takes the full width */
+  margin-bottom: 1rem; /* Space between image and article header */
+}
+
+.article-image {
+  max-height: 500px; /* Larger height for the image */
+  width: 100%;
+  object-fit: cover; /* Ensures the image covers the area nicely */
+}
+
 .article-title {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
@@ -9,6 +24,17 @@
 
 .article-content {
   line-height: 1.6;
+}
+
+.article-subtitle {
+  font-size: 1.2rem; 
+  margin-top: 0.5rem;
+  color: #000000;
+}
+
+.article-date {
+  font-size: 1rem; 
+  color: #000000;
 }
 
 .article-content h1,
@@ -45,5 +71,13 @@
   
   .article-content {
     font-size: 0.9em;
+  }
+  
+  .article-image-wrapper {
+    margin-bottom: 0.5rem;
+  }
+  
+  .article-image {
+    max-height: 300px; /* Adjust height for mobile screens */
   }
 }

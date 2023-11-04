@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Card, Button, Navbar, Form, FormControl } from 'react-bootstrap';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { fetchAllArticles } from '../api/articles-api';
 import './Homepage.css';
 
@@ -25,17 +24,20 @@ const Homepage = () => {
     article.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const renderTitle = (title) => {
+  const renderTitle = (title, isLatest = false) => {
     const splitTitle = title.split(":");
     if (splitTitle.length === 2) {
       return (
         <>
-          <span className="main-title">{splitTitle[0]}</span>
+          <span className={isLatest ? "latest-article-title" : "main-title"}>
+            {splitTitle[0]}
+          </span>
+          <hr />
           <span className="sub-title">{splitTitle[1]}</span>
         </>
       );
     }
-    return title;
+    return <span className={isLatest ? "latest-article-title" : ""}>{title}</span>;
   };
 
   return (
@@ -45,17 +47,21 @@ const Homepage = () => {
           <Row className="mb-5">
             <Col>
               <Card className="bg-dark text-white">
-              <Card.Img
-                className="latest-article-image"
-                src={filteredArticles[0].imageURL}
-                alt="Latest Article Image"
-                style={{ opacity: '0.65' }}
+                <Card.Img
+                  className="latest-article-image"
+                  src={filteredArticles[0].imageURL}
+                  alt="Latest Article Image"
+                  style={{ opacity: '0.65' }}
                 />
-                <Card.ImgOverlay className="d-flex flex-column justify-content-center">
-                  <Card.Title className="latest-article-title">{renderTitle(filteredArticles[0].title)}</Card.Title>
-                  <Button variant="primary" href={`/article/${filteredArticles[0].titleId}`}>
-                    Read More
-                  </Button>
+                <Card.ImgOverlay className="d-flex justify-content-between flex-column h-100">
+                  <div className="overlay-top">
+                    {renderTitle(filteredArticles[0].title, true)}
+                  </div>
+                  <div className="overlay-bottom">
+                    <Button variant="primary" href={`/article/${filteredArticles[0].titleId}`}>
+                      Read More
+                    </Button>
+                  </div>
                 </Card.ImgOverlay>
               </Card>
             </Col>
@@ -69,7 +75,7 @@ const Homepage = () => {
                 <Card>
                   <Card.Img variant="top" src={article.imageURL} />
                   <Card.Body>
-                    <Card.Title className="article-title">{renderTitle(article.title)}</Card.Title>
+                    {renderTitle(article.title)}
                     <Card.Text>{createdAt}</Card.Text>
                     <Button variant="primary" href={`/article/${article.titleId}`}>
                       Read More

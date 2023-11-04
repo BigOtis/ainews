@@ -25,11 +25,14 @@ const NewsArticle = () => {
     return <p>Loading...</p>;
   }
 
+  // Split the title into main title and subtitle if there's a colon
+  const titleParts = article.title.split(':');
+  const mainTitle = titleParts[0];
+  const subTitle = titleParts.length > 1 ? titleParts.slice(1).join(':').trim() : '';
+
   const processedContent = article.content.replace(
     /<p><strong>(.*?)<\/strong><\/p>/g,
-    (match, text) => {
-      return `<h4>${text}</h4>`;
-    }
+    (match, text) => `<h4>${text}</h4>`
   );
 
   const formattedDate = format(new Date(article.createdAt), 'EEEE, MMMM do, yyyy');
@@ -57,47 +60,32 @@ const NewsArticle = () => {
   return (
     <Container fluid className="mt-4">
       <Helmet>
-        <title>{article.title}</title>
-        <meta name="description" content={article.summary} />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.summary} />
-        <meta property="og:image" content={article.imageURL} />
-        <meta property="og:url" content={window.location.href} />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={article.summary} />
-        <meta name="twitter:image" content={article.imageURL} />
-        <meta name="twitter:card" content="summary_large_image" />
+        <title>{`${mainTitle}${subTitle ? `: ${subTitle}` : ''}`}</title>
+        <meta name="description" content={article.description} />
       </Helmet>
       <Row>
         <Col>
           <Card className="article-container">
+            {article.imageURL && (
+              <div className="article-image-wrapper">
+                <Image
+                  src={article.imageURL}
+                  alt="Article"
+                  className="article-image"
+                  fluid
+                />
+              </div>
+            )}
             <Card.Header className="article-header">
-              <Container>
-                <Row>
-                  <Col xs={12} md={8}>
-                    <div className="header-content">
-                      <h2>{article.title}</h2>
-                      <h5>{formattedDate}</h5>
-                    </div>
-                  </Col>
-                  <Col xs={12} md={4} className="d-flex justify-content-center align-items-center">
-                    {article.imageURL && (
-                      <Image
-                        src={article.imageURL}
-                        alt="Article"
-                        className="header-image"
-                        style={{ width: '130px', height: '130px' }}
-                        fluid
-                        rounded
-                      />
-                    )}
-                  </Col>
-                </Row>
-              </Container>
+              <h2>{mainTitle}</h2>
+              {subTitle && <h5 className="article-subtitle">{subTitle}</h5>}
+              <h5 className="article-date">{formattedDate}</h5>
             </Card.Header>
-            <Card.Body className="article-content" dangerouslySetInnerHTML={{ __html: processedContent }} />
+            <Card.Body className="article-content">
+              {htmlToReactParser.parse(processedContent)}
+            </Card.Body>
             <Card.Footer>
-            <h5>Summary</h5>
+              <h5>Summary</h5>
               <p>{article.summary}</p>
               {renderSourceArticles()}
             </Card.Footer>
@@ -114,4 +102,3 @@ const NewsArticle = () => {
 };
 
 export default NewsArticle;
-
