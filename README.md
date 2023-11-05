@@ -55,4 +55,4 @@ npm start
 
 This command will open the news webpage. The application should be running on http://localhost:3000/.
 
-Now, you can start chatting with any person you can imagine! Add new conversations and interact with the generated responses from the OpenAI API. Enjoy your chat experience!
+Now, you can generate an AI perspective on the latest news with the click of a button.
