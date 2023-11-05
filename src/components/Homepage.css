@@ -1,38 +1,14 @@
-.latest-article-title {
-  font-size: 10rem; /* Increased size for the latest article main title */
-  text-shadow: 1px 1px 0 #000, -2px -2px 0 #000, 2px -2px 0 #1e1d1d, -2px 2px 0 #1b1a1a; 
-}
-
-.latest-article-summary {
-  display: none;
-}
-
+/* Base styles for articles */
 .article-title {
-  font-size: 1.2rem; /* Size for main title on article cards */
+  font-size: 1.2rem;
 }
 
 .article-summary {
   font-size: 1rem;
+  display: none;
 }
 
-@media (min-width: 576px) {
-  .latest-article-title {
-    font-size: 3rem; /* Even larger size for the latest article main title on wider screens */
-  }
-
-  .latest-article-summary {
-    display: block;
-  }
-
-  .article-title {
-    font-size: 1.5rem; /* Larger size for main title on article cards for wider screens */
-  }
-
-  .article-summary {
-    font-size: 1.2rem;
-  }
-}
-
+/* Base styles for images */
 .card-img-top,
 .latest-article-image {
   max-width: 100%;
@@ -47,38 +23,66 @@
   max-height: 400px;
 }
 
+/* Base styles for titles */
 .main-title {
   display: block;
-  font-size: 1.5rem; /* Adjusted size for main title */
+  font-size: 1.5rem;
 }
 
 .sub-title {
   display: block;
-  font-size: 0.9rem; /* Adjusted size for sub title to be smaller */
+  font-size: 0.9rem;
 }
 
-@media (min-width: 576px) {
-  .main-title {
-    font-size: 1.8rem; /* Larger size for main title on wider screens */
-  }
-
-  .sub-title {
-    font-size: 1.2rem; /* Smaller size for sub title to maintain hierarchy */
-  }
-}
-
-/* New styles for positioning elements on the card */
-.overlay-top {
-  align-self: start; /* Align to the top */
-  padding: 1rem; /* Add some padding */
-}
-
-.overlay-bottom {
-  align-self: end; /* Align to the bottom */
-  padding: 1rem; /* Add some padding */
-  text-align: right; /* Align the button to the right */
+/* Styles for latest article */
+.latest-article-title {
+  font-size: 10rem;
+  text-shadow: 1px 1px 0 #000, -2px -2px 0 #000, 2px -2px 0 #1e1d1d, -2px 2px 0 #1b1a1a;
 }
 
 .latest-article-image:hover {
-  opacity: 1; /* Full opacity on hover */
+  opacity: 1;
+}
+
+/* Overlay styles */
+.overlay-top {
+  align-self: start;
+  padding: 1rem;
+}
+
+.overlay-bottom {
+  align-self: end;
+  padding: 1rem;
+  text-align: right;
+}
+
+/* Media Queries */
+@media (max-width: 575px) {
+  .latest-article-title {
+    font-size: 2rem; /* Smaller size for mobile screens */
+  }
+}
+
+@media (min-width: 576px) {
+  .article-title {
+    font-size: 1.5rem;
+  }
+
+  .article-summary,
+  .latest-article-summary {
+    display: block;
+    font-size: 1.2rem;
+  }
+
+  .latest-article-title {
+    font-size: 3rem;
+  }
+
+  .main-title {
+    font-size: 1.8rem;
+  }
+
+  .sub-title {
+    font-size: 1.2rem;
+  }
 }

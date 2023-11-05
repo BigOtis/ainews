@@ -1,22 +1,25 @@
+/* Container and layout */
 .article-container {
   padding: 2rem;
 }
 
 .article-header {
-  padding-bottom: 0; /* Remove extra padding if the image is below the header */
+  padding-bottom: 0;
 }
 
 .article-image-wrapper {
-  width: 100%; /* Ensure the wrapper takes the full width */
-  margin-bottom: 1rem; /* Space between image and article header */
-}
-
-.article-image {
-  max-height: 500px; /* Larger height for the image */
   width: 100%;
-  object-fit: cover; /* Ensures the image covers the area nicely */
+  margin-bottom: 1rem;
 }
 
+/* Image styling */
+.article-image {
+  max-height: 500px;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Typography and colors */
 .article-title {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
@@ -26,17 +29,18 @@
   line-height: 1.6;
 }
 
-.article-subtitle {
-  font-size: 1.2rem; 
+.article-subtitle,
+.article-date {
+  font-size: 1.2rem;
   margin-top: 0.5rem;
   color: #000000;
 }
 
 .article-date {
-  font-size: 1rem; 
-  color: #000000;
+  font-size: 1rem;
 }
 
+/* Header hierarchy within content */
 .article-content h1,
 .article-content h2,
 .article-content h3,
@@ -47,6 +51,7 @@
   margin-bottom: 1rem;
 }
 
+/* Paragraphs and blockquotes */
 .article-content p {
   margin-bottom: 1.5rem;
 }
@@ -63,7 +68,7 @@
   margin-top: 0.5rem;
 }
 
-/* Mobile view adjustments */
+/* Media queries for responsive adjustments */
 @media only screen and (max-width: 768px) {
   .article-container {
     padding: 1rem;
@@ -78,6 +83,6 @@
   }
   
   .article-image {
-    max-height: 300px; /* Adjust height for mobile screens */
+    max-height: 300px;
   }
 }
