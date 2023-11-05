@@ -21,8 +21,31 @@ const NewsArticle = () => {
     fetchArticle();
   }, [id]);
 
+  const renderSkeleton = () => (
+    <>
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-date"></div>
+      <div className="skeleton skeleton-img"></div>
+      <div className="skeleton skeleton-text"></div>
+      <div className="skeleton skeleton-text"></div>
+      <div className="skeleton skeleton-text"></div>
+    </>
+  );
+
   if (!article) {
-    return <p>Loading...</p>;
+    return (
+      <Container fluid className="mt-4">
+        <Row>
+          <Col>
+            <Card className="article-container">
+              <Card.Header className="article-header">
+                {renderSkeleton()}
+              </Card.Header>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    );
   }
 
   // Split the title into main title and subtitle if there's a colon
