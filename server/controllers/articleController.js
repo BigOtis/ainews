@@ -52,7 +52,7 @@ const fetchLatestArticles = async (db) => {
     articles = await db.collection("articles")
       .find({}, { projection: { title: 1, summary: 1, imageURL: 1, titleId: 1, createdAt: 1 } })
       .sort({ createdAt: -1 })
-      .limit(10)
+      .limit(16)
       .toArray();
 
     cache.set(cacheKey, articles);

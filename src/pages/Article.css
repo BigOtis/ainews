@@ -1,6 +1,10 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
 /* Container and layout */
 .article-container {
   padding: 2rem;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .article-header {
@@ -23,6 +27,7 @@
 .article-title {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .article-content {
@@ -69,11 +74,13 @@
 }
 
 /* Media queries for responsive adjustments */
+/* Media queries for responsive adjustments */
 @media only screen and (max-width: 768px) {
   .article-container {
     padding: 1rem;
+    font-size: 0.9em; /* Adjust font size for mobile */
   }
-  
+
   .article-content {
     font-size: 0.9em;
   }
@@ -126,4 +133,28 @@
   width: 90%;
   height: 10px;
   margin: 8px 0;
+}
+
+.title-and-sharing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.social-sharing {
+  display: flex;
+  gap: 10px;
+}
+
+.social-sharing button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  color: #555; /* Color can be adjusted based on the design */
+}
+
+.social-sharing button:hover,
+.social-sharing button:focus {
+  color: #007bff; /* Change hover color */
 }

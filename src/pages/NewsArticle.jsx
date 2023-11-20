@@ -5,6 +5,7 @@ import { fetchArticleById } from '../api/articles-api';
 import { Parser } from 'html-to-react';
 import { format } from 'date-fns';
 import { Helmet } from 'react-helmet';
+import { FaTwitter, FaFacebookF, FaLinkedinIn, FaRedditAlien, FaLink } from 'react-icons/fa';
 import './Article.css';
 
 const NewsArticle = () => {
@@ -60,6 +61,28 @@ const NewsArticle = () => {
 
   const formattedDate = format(new Date(article.createdAt), 'EEEE, MMMM do, yyyy');
 
+  const shareUrl = window.location.href; // This gets the current URL to share
+
+  // Function to handle copying the link to clipboard
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      alert('Link copied to clipboard!'); // You might want to replace this with a less intrusive notification
+    });
+  };
+
+  // Social sharing component
+  const SocialSharing = () => {
+    return (
+      <div className="social-sharing">
+        <button onClick={copyToClipboard} title="Copy link"><FaLink /></button>
+        <button onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`, '_blank')} title="Share on Twitter"><FaTwitter /></button>
+        <button onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank')} title="Share on Facebook"><FaFacebookF /></button>
+        <button onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank')} title="Share on LinkedIn"><FaLinkedinIn /></button>
+        <button onClick={() => window.open(`https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}`, '_blank')} title="Share on Reddit"><FaRedditAlien /></button>
+      </div>
+    );
+  };
+
   const renderSourceArticles = () => {
     if (article.sourceArticles && article.sourceArticles.length > 0) {
       return (
@@ -100,9 +123,12 @@ const NewsArticle = () => {
               </div>
             )}
             <Card.Header className="article-header">
-              <h2>{mainTitle}</h2>
-              {subTitle && <h5 className="article-subtitle">{subTitle}</h5>}
-              <h5 className="article-date">{formattedDate}</h5>
+              <div className="title-container">
+                <h2>{mainTitle}</h2>
+                {subTitle && <h5 className="article-subtitle">{subTitle}</h5>}
+                <h5 className="article-date">{formattedDate}</h5>
+                <SocialSharing />
+              </div>
             </Card.Header>
             <Card.Body className="article-content">
               {htmlToReactParser.parse(processedContent)}
