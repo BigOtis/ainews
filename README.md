@@ -56,3 +56,8 @@ npm start
 This command will open the news webpage. The application should be running on http://localhost:3000/.
 
 Now, you can generate an AI perspective on the latest news with the click of a button.
+
+To generate new articles to populate your database, run the newsGen script standalone:
+```
+node server/util/newsGen.js
+```
