@@ -1,27 +1,28 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
+const cheerio = require('cheerio');
+const fetch = require('node-fetch');
 
 function buildQueryString(queryVars) {
-    const queryKeys = Object.keys(queryVars);
-    const queryString = queryKeys.map(key => `${encodeURIComponent(key)}=${encodeURIComponent(queryVars[key])}`).join('&');
-    return queryString;
-  }
-  
+  const queryKeys = Object.keys(queryVars);
+  const queryString = queryKeys.map(key => `${encodeURIComponent(key)}=${encodeURIComponent(queryVars[key])}`).join('&');
+  return queryString;
+}
+
 module.exports = async function scrapeGoogleNews(config) {
   const queryString = config.queryVars ? buildQueryString(config.queryVars) : '';
   const url = `https://news.google.com/search?${queryString}&q=${config.searchTerm} when:${config.timeframe || '7d'}`;
+  console.log(`SCRAPING NEWS FROM: ${url}`);
 
   const puppeteerConfig = {
     headless: true,
-    args: puppeteer.defaultArgs().concat(config.puppeteerArgs).filter(Boolean),
+    args: puppeteer.defaultArgs().concat(config.puppeteerArgs).filter(Boolean)
   };
   const browser = await puppeteer.launch(puppeteerConfig);
   const page = await browser.newPage();
   page.setViewport({ width: 1366, height: 768 });
   page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
   page.setRequestInterception(true);
-  page.on('request', (request) => {
+  page.on('request', request => {
     if (!request.isNavigationRequest()) {
       request.continue();
       return;
@@ -43,64 +44,41 @@ module.exports = async function scrapeGoogleNews(config) {
 
   const content = await page.content();
   const $ = cheerio.load(content);
-  const articles = $('a[href^="./article"]').closest('div[jslog]');
-  const results = [];
-  const urlChecklist = [];
-
-  let count = 0; // Keep track of the number of articles
-  const maxArticles = config.maxArticles || 10; // Set the maximum number of articles based on config input or default to 10
+  const articles = $('article');
+  let results = [];
 
   articles.each(function () {
-    // Stop processing articles if the maxArticles threshold has been met
-    if (count >= maxArticles) {
-      return false;
-    }
     const link = $(this).find('a[href^="./article"]').attr('href').replace('./', 'https://news.google.com/') || false;
-    link && urlChecklist.push(link);
+    const srcset = $(this).find('figure').find('img').attr('srcset')?.split(' ');
+    const image = srcset && srcset.length ? srcset[srcset.length - 2] : $(this).find('figure').find('img').attr('src');
     const mainArticle = {
-      title: $(this).find('h3').text() || false,
+      title: $(this).find('h4').text() || $(this).find('div > div + div > div a').text(),
       link,
-      image: $(this).find('figure').find('img').attr('src') || false,
-      source: $(this).find('div:last-child svg+a').text() || false,
+      image,
+      source: $(this).find('div[data-n-tid]').text() || false,
       datetime: new Date($(this).find('div:last-child time').attr('datetime')) || false,
-      time: $(this).find('div:last-child time').text() || false,
-      related: [],
+      time: $(this).find('div:last-child time').text() || false
     };
-    console.log(mainArticle);
-    const subArticles = $(this).find('div[jsname]').find('article');
-    subArticles.each(function () {
-      const subLink = $(this).find('a').first().attr('href').replace('./', 'https://news.google.com/') || false;
-      if (subLink && !urlChecklist.includes(subLink)) {
-        mainArticle.related.push({
-            title: $(this).find('h4').text() || $(this).find('h4 a').text() || false,
-            link: subLink,
-            source: $(this).find('div:last-child svg+a').text() || false,
-            time: $(this).find('div:last-child time').text() || false,
-          });
-        }
-      });
-      results.push(mainArticle);
-      count++;
-    });
-  
-    if (config.prettyURLs) {
-      const prettyResults = [];
-      for (const article of results) {
-        try {
-          const res = await axios.get(article.link);
-          const _$ = cheerio.load(res.data);
-          article.link = _$('c-wiz a[rel=nofollow]').attr('href');
-          prettyResults.push(article);
-        } catch (error) {
-          console.error(`Failed to prettify URL for article: ${article.title}`);
-        }
+    results.push(mainArticle);
+  });
+
+  if (config.prettyURLs) {
+    results = await Promise.all(results.map(async article => {
+      try {
+        const response = await fetch(article.link);
+        const articleContent = await response.text();
+        const _$ = cheerio.load(articleContent);
+        article.link = _$('c-wiz a[rel=nofollow]').attr('href');
+        return article;
+      } catch (error) {
+        console.error(`Failed to prettify URL for article: ${article.title}`);
+        return article; // Return the article even if prettifying fails
       }
-      results = prettyResults;
-    }
-  
-    await page.close();
-    await browser.close();
-  
-    return results.filter(result => result.title);
+    }));
   }
-          
+
+  await page.close();
+  await browser.close();
+
+  return results.filter(result => result.title);
+};
