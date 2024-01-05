@@ -1,5 +1,5 @@
 # AI News
-![image](https://github.com/BigOtis/ainews/assets/6844863/2667427c-fb59-4a34-b9cb-ead8745852aa)
+![image](https://github.com/BigOtis/ainews/assets/6844863/e4116694-01c0-4dea-8cf3-13efc3095711)
 
 ## Prerequisites
 
