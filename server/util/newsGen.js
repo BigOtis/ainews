@@ -138,7 +138,7 @@ const createWeeklyNewsArticle = async (topic = "AI News") => {
       titleId,
       summary,
       content,
-      imageURL: 'https://th.bing.com/th/id/OIG.Ckmtump2xlt7mrw7e0x8?pid=ImgGn',
+      imageURL: 'https://i.imgur.com/NnRU67o.png',
       sourceArticles: sourceArticlesData,
       createdAt: new Date(),
     };
